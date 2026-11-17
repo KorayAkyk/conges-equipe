@@ -1,0 +1,4 @@
+app:
+  jwt:
+    # Valeur de test, sans usage reel.
+    secret: test-uniquement-cle-de-test-sans-aucune-valeur-0123456789

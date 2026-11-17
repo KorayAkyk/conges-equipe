@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: conges-equipe
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/conges}
+    username: ${DATABASE_USER:conges}
+    password: ${DATABASE_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+app:
+  jwt:
+    # Aucune valeur par defaut : sans APP_JWT_SECRET, l'application refuse de demarrer.
+    secret: ${APP_JWT_SECRET:}
+    duree: 8h
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

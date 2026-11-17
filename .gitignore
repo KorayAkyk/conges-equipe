@@ -1,0 +1,19 @@
+# Java
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+# Node / Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/coverage/
+frontend/test-results/
+frontend/playwright-report/
+# Environnement local
+.env
+.env.local
+# Editeurs et systeme
+.idea/
+.vscode/
+*.iml
+.DS_Store
+*.log

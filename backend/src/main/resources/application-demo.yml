@@ -1,0 +1,6 @@
+# Profil de demonstration : donnees inventees creees au demarrage.
+app:
+  jwt:
+    # Valeur de DEVELOPPEMENT UNIQUEMENT, publique dans ce depot. Toujours la remplacer par
+    # APP_JWT_SECRET hors de la demonstration locale.
+    secret: ${APP_JWT_SECRET:dev-uniquement-cle-publique-de-demonstration-a-ne-jamais-utiliser}

@@ -1,0 +1,50 @@
+# Demonstration locale complete : base PostgreSQL, API Spring Boot, interface Angular servie par nginx.
+# Application : http://localhost:8080  -  Swagger UI : http://localhost:8080/swagger-ui.html
+# Les mots de passe ci-dessous sont des valeurs de demonstration, sans usage reel.
+name: conges-equipe
+
+services:
+  db:
+    image: postgres:17.11-alpine
+    environment:
+      POSTGRES_DB: conges
+      POSTGRES_USER: conges
+      POSTGRES_PASSWORD: conges-demo
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U conges -d conges"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  api:
+    build: ./backend
+    environment:
+      SPRING_PROFILES_ACTIVE: demo
+      DATABASE_URL: jdbc:postgresql://db:5432/conges
+      DATABASE_USER: conges
+      DATABASE_PASSWORD: conges-demo
+    env_file:
+      - path: .env
+        required: false
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health | grep -q UP"]
+      interval: 3s
+      timeout: 3s
+      retries: 60
+      start_period: 10s
+
+  web:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost/ | grep -q app-root"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
