@@ -37,14 +37,14 @@ public class DemandeController {
     }
 
     @GetMapping("/miennes")
-    @Operation(summary = "Demandes de l'utilisateur connecte, les plus recentes d'abord")
+    @Operation(summary = "Demandes de l'utilisateur connecté, les plus récentes d'abord")
     public List<DemandeVue> miennes(@AuthenticationPrincipal Jwt jeton) {
         return demandes.mesDemandes(Acteur.id(jeton));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Depose une demande, decomptee en jours ouvres")
+    @Operation(summary = "Dépose une demande, décomptée en jours ouvrés")
     public DemandeVue creer(@AuthenticationPrincipal Jwt jeton, @Valid @RequestBody NouvelleDemande requete) {
         return demandes.creer(Acteur.id(jeton), requete.type(), new Periode(requete.dateDebut(), requete.dateFin()),
                 requete.debutApresMidi(), requete.finMatin(), requete.commentaire());
@@ -63,7 +63,7 @@ public class DemandeController {
     }
 
     @PostMapping("/{id}/valider")
-    @Operation(summary = "Valide une demande ; joursSousEffectif signale les jours a plus de 50 % d'absents")
+    @Operation(summary = "Valide une demande ; joursSousEffectif signale les jours à plus de 50 % d'absents")
     public DemandeVue valider(@AuthenticationPrincipal Jwt jeton, @PathVariable Long id) {
         return demandes.valider(Acteur.id(jeton), id);
     }
@@ -76,7 +76,7 @@ public class DemandeController {
     }
 
     @GetMapping("/{id}/historique")
-    @Operation(summary = "Changements d'etat de la demande, du plus ancien au plus recent")
+    @Operation(summary = "Changements d'état de la demande, du plus ancien au plus récent")
     public List<EvenementVue> historique(@AuthenticationPrincipal Jwt jeton, @PathVariable Long id) {
         return demandes.historique(Acteur.id(jeton), id);
     }

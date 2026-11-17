@@ -27,20 +27,20 @@ public class CalendrierController {
     }
 
     @GetMapping("/api/calendrier")
-    @Operation(summary = "Absences d'une equipe sur un mois (format AAAA-MM)")
+    @Operation(summary = "Absences d'une équipe sur un mois (format AAAA-MM)")
     public CalendrierVue calendrier(@AuthenticationPrincipal Jwt jeton, @RequestParam YearMonth mois,
             @RequestParam(required = false) Long equipeId) {
         return calendriers.calendrier(Acteur.id(jeton), mois, equipeId);
     }
 
     @GetMapping("/api/equipes")
-    @Operation(summary = "Equipes dont l'utilisateur peut consulter le calendrier")
+    @Operation(summary = "Équipes dont l'utilisateur peut consulter le calendrier")
     public List<EquipeVue> equipes(@AuthenticationPrincipal Jwt jeton) {
         return calendriers.equipesVisibles(Acteur.id(jeton));
     }
 
     @GetMapping("/api/jours-feries")
-    @Operation(summary = "Jours feries d'une annee (Code du travail, article L3133-1)")
+    @Operation(summary = "Jours fériés d'une année (Code du travail, article L3133-1)")
     public List<CalendrierVue.JourFerie> joursFeries(@RequestParam int annee) {
         return JoursFeries.de(annee).entrySet().stream()
                 .map(e -> new CalendrierVue.JourFerie(e.getKey(), e.getValue()))

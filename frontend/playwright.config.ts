@@ -21,8 +21,6 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         viewport: { width: 1280, height: 820 },
-        // Champs de date au format francais dans les captures.
-        launchOptions: { args: ['--lang=fr-FR'] },
       },
     },
   ],

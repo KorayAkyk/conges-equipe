@@ -22,7 +22,7 @@ public class ProfilController {
     }
 
     @GetMapping("/api/moi")
-    @Operation(summary = "Utilisateur connecte et ses soldes")
+    @Operation(summary = "Utilisateur connecté et ses soldes")
     public ProfilVue moi(@AuthenticationPrincipal Jwt jeton) {
         return profils.profil(Acteur.id(jeton));
     }

@@ -28,7 +28,7 @@ public class AuthController {
     }
 
     @PostMapping("/connexion")
-    @Operation(summary = "Echange un e-mail et un mot de passe contre un jeton JWT")
+    @Operation(summary = "Échange un e-mail et un mot de passe contre un jeton JWT")
     public ReponseConnexion connexion(@Valid @RequestBody RequeteConnexion requete) {
         UtilisateurVue utilisateur = auth.verifier(requete.email(), requete.motDePasse());
         JetonService.Jeton jeton = jetons.emettre(utilisateur);
