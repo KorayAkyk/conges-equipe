@@ -145,9 +145,9 @@ avec le schéma créé par Flyway et une horloge figée au lundi 16 novembre 202
 
 La CI GitHub Actions exécute trois jobs à chaque envoi :
 
-- **backend** : `./mvnw verify`, NB_BACKEND tests ;
-- **frontend** : audit des dépendances, ESLint, NB_FRONTEND tests unitaires, build de production ;
-- **e2e** : `docker compose up --build`, puis NB_E2E scénarios Playwright qui prennent les captures
+- **backend** : `./mvnw verify`, 75 tests ;
+- **frontend** : audit des dépendances, ESLint, 26 tests unitaires, build de production ;
+- **e2e** : `docker compose up --build`, puis 8 scénarios Playwright qui prennent les captures
   ci-dessus.
 
 Les dépendances npm sont installées sans exécuter leurs scripts (`ignore-scripts`), à des versions
