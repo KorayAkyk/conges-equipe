@@ -1,0 +1,15 @@
+.entete-calendrier { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+.navigation { display: flex; align-items: center; gap: 0.5rem; }
+.mois { min-width: 10rem; text-align: center; text-transform: capitalize; }
+.defilement { overflow-x: auto; }
+.grille { border-collapse: collapse; font-size: 0.8rem; }
+.grille th, .grille td { border: 1px solid var(--bordure); width: 1.7rem; height: 1.9rem; text-align: center; padding: 0; }
+.grille th.nom { width: auto; min-width: 9rem; text-align: left; padding: 0 0.5rem; font-weight: 600; }
+.initiale { display: block; color: var(--texte-doux); font-weight: 400; }
+.chome { background: var(--fond-chome); }
+.validee { background: var(--vert); }
+.attente { background: repeating-linear-gradient(45deg, var(--orange), var(--orange) 4px, #fff3d6 4px, #fff3d6 8px); }
+.demi { opacity: 0.55; }
+.legende { display: flex; gap: 1.5rem; list-style: none; padding: 0; margin-top: 1rem; font-size: 0.9rem; }
+.pastille { display: inline-block; width: 0.9rem; height: 0.9rem; margin-right: 0.4rem; vertical-align: middle; border: 1px solid var(--bordure); }
+.feries span { margin-right: 0.75rem; }

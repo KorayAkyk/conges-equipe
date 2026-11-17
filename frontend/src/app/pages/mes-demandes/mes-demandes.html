@@ -1,0 +1,88 @@
+<section class="soldes" aria-label="Mes soldes">
+  @for (solde of soldes(); track solde.type) {
+    <article class="carte solde" [attr.data-testid]="'solde-' + solde.type">
+      <h2>{{ solde.libelle }}</h2>
+      <p class="disponible">{{ jours(solde.disponible) }}</p>
+      <p class="detail">
+        disponibles sur {{ jours(solde.acquis) }} acquis
+        <br>{{ jours(solde.pris) }} pris, {{ jours(solde.enAttente) }} en attente
+      </p>
+    </article>
+  }
+</section>
+
+<section class="carte">
+  <h1>Nouvelle demande</h1>
+  <form [formGroup]="formulaire" (ngSubmit)="deposer()" class="formulaire-demande" novalidate>
+    <label for="type">Type</label>
+    <select id="type" formControlName="type">
+      <option value="CONGES_PAYES">Congés payés</option>
+      <option value="RTT">RTT</option>
+    </select>
+    <label for="debut">Du</label>
+    <input id="debut" type="date" formControlName="dateDebut">
+    <label for="fin">Au</label>
+    <input id="fin" type="date" formControlName="dateFin">
+    <label class="case"><input type="checkbox" formControlName="debutApresMidi"> Commence l'après-midi</label>
+    <label class="case"><input type="checkbox" formControlName="finMatin"> Finit le matin</label>
+    <label for="commentaire">Commentaire</label>
+    <input id="commentaire" type="text" formControlName="commentaire" maxlength="500">
+    <button type="submit">Envoyer la demande</button>
+  </form>
+  <p class="aide">Décompte en jours ouvrés : du lundi au vendredi, hors jours fériés.</p>
+  @if (message()) {
+    <p class="alerte succes" role="status">{{ message() }}</p>
+  }
+  @if (erreur()) {
+    <p class="alerte erreur" role="alert">{{ erreur() }}</p>
+  }
+</section>
+
+<section class="carte">
+  <h1>Mes demandes</h1>
+  @if (demandes().length === 0) {
+    <p>Aucune demande pour le moment.</p>
+  } @else {
+    <table class="tableau">
+      <thead>
+        <tr><th scope="col">Période</th><th scope="col">Type</th><th scope="col">Jours</th><th scope="col">Statut</th><th scope="col"><span class="masque">Actions</span></th></tr>
+      </thead>
+      <tbody>
+        @for (demande of demandes(); track demande.id) {
+          <tr data-testid="ligne-demande">
+            <td>
+              {{ dateLisible(demande.dateDebut) }}@if (demande.debutApresMidi) { (après-midi)}
+              au {{ dateLisible(demande.dateFin) }}@if (demande.finMatin) { (matin)}
+              @if (demande.motifRefus) {
+                <br><small>Motif du refus : {{ demande.motifRefus }}</small>
+              }
+            </td>
+            <td>{{ libelleType(demande.type) }}</td>
+            <td>{{ jours(demande.jours) }}</td>
+            <td><span class="badge" [class]="'badge ' + demande.statut">{{ libelleStatut(demande.statut) }}</span></td>
+            <td class="actions">
+              <button type="button" class="lien" (click)="basculerHistorique(demande)">Historique</button>
+              @if (annulable(demande)) {
+                <button type="button" class="secondaire" (click)="annuler(demande)">Annuler</button>
+              }
+            </td>
+          </tr>
+          @if (historiques()[demande.id]; as evenements) {
+            <tr class="historique">
+              <td colspan="5">
+                <ol>
+                  @for (e of evenements; track $index) {
+                    <li>
+                      {{ horodatage(e.horodatage) }} : {{ libelleStatut(e.nouveauStatut) }} par {{ e.auteurNom }}
+                      @if (e.commentaire) { ({{ e.commentaire }}) }
+                    </li>
+                  }
+                </ol>
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  }
+</section>

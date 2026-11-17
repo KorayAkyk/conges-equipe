@@ -1,0 +1,29 @@
+<section class="carte connexion">
+  <h1>Connexion</h1>
+  <form [formGroup]="formulaire" (ngSubmit)="seConnecter()" novalidate>
+    <label for="email">E-mail</label>
+    <input id="email" type="email" formControlName="email" autocomplete="username">
+    @if (formulaire.controls.email.touched && formulaire.controls.email.invalid) {
+      <p class="aide-erreur">Saisissez une adresse e-mail valide.</p>
+    }
+    <label for="mot-de-passe">Mot de passe</label>
+    <input id="mot-de-passe" type="password" formControlName="motDePasse" autocomplete="current-password">
+    @if (erreur()) {
+      <p class="alerte erreur" role="alert">{{ erreur() }}</p>
+    }
+    <button type="submit" [disabled]="envoi()">Se connecter</button>
+  </form>
+
+  <div class="demo">
+    <h2>Comptes de démonstration</h2>
+    <p>Entreprise et personnes inventées. Mot de passe commun : <code>{{ motDePasseDemo }}</code></p>
+    <ul>
+      @for (compte of comptes; track compte.email) {
+        <li>
+          <button type="button" class="lien" (click)="remplir(compte.email)">{{ compte.email }}</button>
+          <span>{{ compte.role }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

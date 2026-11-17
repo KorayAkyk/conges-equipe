@@ -1,0 +1,63 @@
+:root {
+  --primaire: #1f5f8b;
+  --primaire-fonce: #174a6d;
+  --texte: #1d2733;
+  --texte-doux: #5b6773;
+  --fond: #f4f6f8;
+  --bordure: #d9dee3;
+  --fond-chome: #e9ecef;
+  --vert: #3c9d5d;
+  --orange: #e7a33e;
+  --rouge: #b93a32;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--texte);
+  background: var(--fond);
+}
+
+body { margin: 0; }
+main { max-width: 72rem; margin: 0 auto; padding: 1.25rem; }
+footer { text-align: center; color: var(--texte-doux); font-size: 0.85rem; padding: 1rem; }
+h1 { font-size: 1.3rem; margin-top: 0; }
+
+.bandeau { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; padding: 0.75rem 1.25rem; background: var(--primaire); color: #fff; }
+.marque { display: flex; flex-direction: column; }
+.marque span { font-size: 0.8rem; opacity: 0.85; }
+.bandeau nav { display: flex; gap: 1rem; flex: 1; }
+.bandeau nav a { color: #fff; text-decoration: none; padding: 0.3rem 0.1rem; border-bottom: 2px solid transparent; }
+.bandeau nav a.actif { border-bottom-color: #fff; }
+.utilisateur { display: flex; align-items: center; gap: 0.75rem; }
+
+.carte { background: #fff; border: 1px solid var(--bordure); border-radius: 0.6rem; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.sous-titre { color: var(--texte-doux); margin-top: 0; }
+.connexion { max-width: 28rem; margin: 2rem auto; }
+.connexion form { display: grid; gap: 0.5rem; }
+.connexion .demo { margin-top: 1.5rem; font-size: 0.9rem; }
+.connexion .demo ul { padding-left: 1rem; }
+.connexion .demo li span { color: var(--texte-doux); margin-left: 0.5rem; }
+
+label { font-weight: 600; font-size: 0.9rem; }
+label.case { font-weight: 400; }
+input, select, textarea { font: inherit; padding: 0.45rem 0.55rem; border: 1px solid var(--bordure); border-radius: 0.35rem; }
+button { font: inherit; cursor: pointer; border: 1px solid var(--primaire); background: var(--primaire); color: #fff; padding: 0.45rem 0.9rem; border-radius: 0.35rem; }
+button:hover { background: var(--primaire-fonce); }
+button:disabled { opacity: 0.6; cursor: default; }
+button.secondaire { background: #fff; color: var(--primaire); }
+button.danger { background: var(--rouge); border-color: var(--rouge); }
+button.lien { background: none; border: none; color: var(--primaire); padding: 0.2rem; text-decoration: underline; }
+.bandeau button.secondaire { border-color: #fff; }
+
+.alerte { padding: 0.6rem 0.8rem; border-radius: 0.35rem; margin: 0.75rem 0 0; }
+.alerte.succes { background: #e5f4ea; color: #1e5b33; }
+.alerte.erreur { background: #fbe7e5; color: #8a241d; }
+.alerte.avertissement { background: #fff3d6; color: #7a5310; }
+.aide { color: var(--texte-doux); font-size: 0.85rem; }
+.aide-erreur { color: var(--rouge); font-size: 0.85rem; margin: 0; }
+
+.tableau { width: 100%; border-collapse: collapse; }
+.tableau th, .tableau td { text-align: left; padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--bordure); vertical-align: top; }
+.badge { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 1rem; font-size: 0.8rem; font-weight: 600; }
+.badge.EN_ATTENTE { background: #fff3d6; color: #7a5310; }
+.badge.VALIDEE { background: #e5f4ea; color: #1e5b33; }
+.badge.REFUSEE { background: #fbe7e5; color: #8a241d; }
+.badge.ANNULEE { background: var(--fond-chome); color: var(--texte-doux); }
+.masque { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }

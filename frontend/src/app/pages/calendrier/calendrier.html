@@ -1,0 +1,71 @@
+<section class="carte">
+  <header class="entete-calendrier">
+    <h1>Calendrier de l'équipe</h1>
+    <div class="navigation">
+      <button type="button" class="secondaire" (click)="changerMois(-1)" aria-label="Mois précédent">&lsaquo;</button>
+      <strong class="mois" data-testid="mois">{{ titreMois() }}</strong>
+      <button type="button" class="secondaire" (click)="changerMois(1)" aria-label="Mois suivant">&rsaquo;</button>
+    </div>
+    @if (equipes().length > 1) {
+      <label>
+        Équipe
+        <select [ngModel]="equipeId()" (ngModelChange)="choisirEquipe($event)">
+          @for (equipe of equipes(); track equipe.id) {
+            <option [ngValue]="equipe.id">{{ equipe.nom }}</option>
+          }
+        </select>
+      </label>
+    }
+  </header>
+
+  @if (erreur()) {
+    <p class="alerte erreur" role="alert">{{ erreur() }}</p>
+  }
+
+  @if (grille(); as g) {
+    <p class="sous-titre">{{ donnees()?.equipeNom }}</p>
+    <div class="defilement">
+      <table class="grille">
+        <thead>
+          <tr>
+            <th scope="col" class="nom">Membre</th>
+            @for (jour of g.jours; track jour.date) {
+              <th scope="col" [class.chome]="!jour.travaille" [attr.title]="jour.ferie">
+                <span class="initiale">{{ jour.initiale }}</span>{{ jour.numero }}
+              </th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (ligne of g.lignes; track ligne.membre) {
+            <tr>
+              <th scope="row" class="nom">{{ ligne.membre }}</th>
+              @for (cellule of ligne.cellules; track $index) {
+                <td
+                  [class.chome]="!g.jours[$index].travaille"
+                  [class.validee]="cellule.statut === 'VALIDEE'"
+                  [class.attente]="cellule.statut === 'EN_ATTENTE'"
+                  [class.demi]="cellule.demi !== null"
+                  [attr.title]="infobulle(cellule) || null"
+                ></td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <ul class="legende">
+      <li><span class="pastille validee"></span>Absence validée</li>
+      <li><span class="pastille attente"></span>Demande en attente</li>
+      <li><span class="pastille chome"></span>Week-end ou jour férié</li>
+    </ul>
+    @if (donnees()?.joursFeries?.length) {
+      <p class="feries">
+        Jours fériés du mois :
+        @for (f of donnees()?.joursFeries; track f.date) {
+          <span>{{ f.libelle }} ({{ f.date.slice(8) }})</span>
+        }
+      </p>
+    }
+  }
+</section>

@@ -1,0 +1,50 @@
+<section class="carte">
+  <h1>Demandes à valider</h1>
+  @if (message()) {
+    <p class="alerte succes" role="status">{{ message() }}</p>
+  }
+  @if (erreur()) {
+    <p class="alerte erreur" role="alert">{{ erreur() }}</p>
+  }
+  @if (chargee() && demandes().length === 0) {
+    <p>Aucune demande en attente.</p>
+  }
+  <ul class="liste">
+    @for (demande of demandes(); track demande.id) {
+      <li class="demande" data-testid="demande-a-valider">
+        <div class="resume">
+          <strong>{{ demande.demandeurNom }}</strong>
+          <span>{{ libelleType(demande.type) }}, {{ jours(demande.jours) }}</span>
+          <span>
+            du {{ dateLisible(demande.dateDebut) }}@if (demande.debutApresMidi) { (après-midi)}
+            au {{ dateLisible(demande.dateFin) }}@if (demande.finMatin) { (matin)}
+          </span>
+          @if (demande.commentaire) {
+            <em>« {{ demande.commentaire }} »</em>
+          }
+        </div>
+        @if (demande.joursSousEffectif.length) {
+          <p class="alerte avertissement">
+            Plus de la moitié de l'équipe serait absente : {{ alerteEffectif(demande) }}.
+            La validation reste possible.
+          </p>
+        }
+        @if (refusEnCours() === demande.id) {
+          <div class="refus">
+            <label [for]="'motif-' + demande.id">Motif du refus (obligatoire)</label>
+            <textarea [id]="'motif-' + demande.id" [(ngModel)]="motif" rows="2" maxlength="500"></textarea>
+            <div class="boutons">
+              <button type="button" class="danger" (click)="confirmerRefus(demande)">Confirmer le refus</button>
+              <button type="button" class="secondaire" (click)="refusEnCours.set(null)">Retour</button>
+            </div>
+          </div>
+        } @else {
+          <div class="boutons">
+            <button type="button" (click)="valider(demande)">Valider</button>
+            <button type="button" class="secondaire" (click)="ouvrirRefus(demande)">Refuser</button>
+          </div>
+        }
+      </li>
+    }
+  </ul>
+</section>

@@ -1,0 +1,9 @@
+.soldes { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.solde h2 { margin: 0; font-size: 1rem; color: var(--texte-doux); }
+.disponible { font-size: 2rem; font-weight: 700; margin: 0.25rem 0; color: var(--primaire); }
+.detail { margin: 0; font-size: 0.9rem; color: var(--texte-doux); }
+.formulaire-demande { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1rem; align-items: center; max-width: 34rem; }
+.formulaire-demande .case { grid-column: 1 / -1; }
+.formulaire-demande button { grid-column: 1 / -1; justify-self: start; }
+.actions { white-space: nowrap; text-align: right; }
+.historique ol { margin: 0; padding-left: 1.2rem; font-size: 0.9rem; }

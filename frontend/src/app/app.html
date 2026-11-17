@@ -1,0 +1,23 @@
+<header class="bandeau">
+  <div class="marque">
+    <strong>Congés d'équipe</strong>
+    <span>Brindille Conseil, entreprise fictive</span>
+  </div>
+  @if (session.utilisateur(); as utilisateur) {
+    <nav aria-label="Navigation principale">
+      <a routerLink="/mes-demandes" routerLinkActive="actif">Mes demandes</a>
+      @if (session.peutDecider()) {
+        <a routerLink="/validation" routerLinkActive="actif">À valider</a>
+      }
+      <a routerLink="/calendrier" routerLinkActive="actif">Calendrier</a>
+    </nav>
+    <div class="utilisateur">
+      <span data-testid="utilisateur">{{ utilisateur.nomComplet }}</span>
+      <button type="button" class="secondaire" (click)="deconnexion()">Déconnexion</button>
+    </div>
+  }
+</header>
+<main>
+  <router-outlet />
+</main>
+<footer>Projet de démonstration : données inventées, règles simplifiées.</footer>

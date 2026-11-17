@@ -2,6 +2,7 @@ package fr.congesequipe.securite;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import java.nio.charset.StandardCharsets;
+import java.time.Clock;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtValidators;
+import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
+import org.springframework.security.oauth2.jwt.JwtIssuerValidator;
+import org.springframework.security.oauth2.jwt.JwtTimestampValidator;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
@@ -56,9 +59,13 @@ public class SecuriteConfig {
     }
 
     @Bean
-    JwtDecoder jwtDecoder(SecretKey cle, JwtProprietes proprietes) {
+    JwtDecoder jwtDecoder(SecretKey cle, JwtProprietes proprietes, Clock horloge) {
         NimbusJwtDecoder decodeur = NimbusJwtDecoder.withSecretKey(cle).macAlgorithm(MacAlgorithm.HS256).build();
-        decodeur.setJwtValidator(JwtValidators.createDefaultWithIssuer(proprietes.emetteur()));
+        // L'expiration est controlee avec l'horloge de l'application, celle qui a emis le jeton.
+        JwtTimestampValidator expiration = new JwtTimestampValidator();
+        expiration.setClock(horloge);
+        decodeur.setJwtValidator(new DelegatingOAuth2TokenValidator<>(expiration,
+                new JwtIssuerValidator(proprietes.emetteur())));
         return decodeur;
     }
 
