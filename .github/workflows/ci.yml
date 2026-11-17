@@ -81,6 +81,9 @@ jobs:
         run: docker compose up -d --build --wait --wait-timeout 300
       - name: Parcours Playwright
         working-directory: frontend
+        env:
+          LANG: fr_FR.UTF-8
+          LANGUAGE: fr_FR:fr
         run: npm run e2e
       - name: Conserver les captures
         if: always()
