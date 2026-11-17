@@ -3,6 +3,7 @@ package fr.congesequipe.domaine;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -45,7 +46,7 @@ class JoursFeriesTest {
 
     @Test
     void renvoieLesJoursDansLOrdreChronologique() {
-        assertThat(JoursFeries.de(2026).keySet()).isSorted();
+        assertThat(List.copyOf(JoursFeries.de(2026).keySet())).isSorted();
     }
 
     @Test
